@@ -6,10 +6,9 @@ import java.util.Map;
 /**
  * @author liwen
  * @Title: Msg
- * @Description: 通用的返回的类
- * @date 2019/10/25 / 18:07
+ * @Description: 返回
+ * @date 2019/11/17 / 13:14
  */
-
 public class Msg {
     /**
      * 状态码   100-成功    200-失败
@@ -23,6 +22,7 @@ public class Msg {
      * 用户要返回给浏览器的数据
      */
     private Map<String, Object> extend = new HashMap<>(1);
+
     public static Msg success() {
         Msg result = new Msg();
         result.setCode(100);
@@ -61,5 +61,11 @@ public class Msg {
         return extend;
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public String getMsg() {
+        return msg;
+    }
 }

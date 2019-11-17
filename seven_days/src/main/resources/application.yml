@@ -38,7 +38,7 @@ spring:
           paths: /**
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+#    time-zone: GMT+8
 
 mybatis:
   # 指定全局配置文件位置

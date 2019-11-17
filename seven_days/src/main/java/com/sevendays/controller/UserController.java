@@ -10,11 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
-import javax.jws.WebParam;
 import java.util.HashMap;
 import java.util.List;
 
@@ -110,6 +108,24 @@ public class UserController {
     public Msg getHelle() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("key", "我是最棒的");
-        return Msg.success().add("key", hashMap);
+        return Msg.success().add("k", hashMap);
+    }
+
+
+    @PostMapping("/user/login")
+    @ResponseBody
+    public Msg logintoindex(UserTable userTable) {
+        logger.info(userTable + "");
+        if (!userTable.getUserName().isEmpty() && !userTable.getPassWord().isEmpty()) {
+            return Msg.success();
+        }
+        logger.info("输出结果{}", userTable);
+        return Msg.fail().add("err", "为空");
+
+    }
+
+    @GetMapping("/dashboard")
+    public String index() {
+        return "dashboard";
     }
 }
