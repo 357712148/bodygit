@@ -10,9 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
+import javax.jws.WebParam;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,12 +28,17 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private static Logger LOG = LoggerFactory.getLogger(UserController.class);
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
     @Autowired
     ItemTableService itemTableService;
 
+//    @GetMapping("/{page}")
+//    public String showPage(@PathVariable String page) {
+//        logger.info("输出页面为：{}", page);
+//        return page;
+//    }
 
     /**
      * 分页查询
@@ -40,16 +48,17 @@ public class UserController {
      */
     @RequestMapping("/userfind")
     @ResponseBody
-    public List<UserTable> findUser(@RequestParam(value = "page", defaultValue = "1") Integer pn) {
+    public Msg findUser(@RequestParam(value = "page", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5);
         List<UserTable> UserInfo = userService.findAllList();
-        return UserInfo;
+        return Msg.success().add("info", UserInfo);
     }
 
 
     @GetMapping("/findinfo")
     @ResponseBody
     public List<UserTable> findUser(UserTable userInfo) {
+        PageHelper.startPage(10, 5);
         List<UserTable> UserInfo = userService.findinfo(userInfo);
         return UserInfo;
     }
@@ -57,9 +66,12 @@ public class UserController {
 
     @PostMapping("/findinfo")
     @ResponseBody
-    public List<UserTable> findUserPost(UserTable userInfo) {
+    public Msg findUserPost(UserTable userInfo) {
         List<UserTable> UserInfo = userService.findinfo(userInfo);
-        return UserInfo;
+        if (UserInfo != null) {
+            return Msg.success().add("info", UserInfo);
+        }
+        return Msg.fail().add("mgs", "查询失败");
     }
 
     /**
@@ -93,5 +105,11 @@ public class UserController {
         return Msg.fail().add("userName", "请求失败缺失参数");
     }
 
-
+    @GetMapping("/hell")
+    @ResponseBody
+    public Msg getHelle() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("key", "我是最棒的");
+        return Msg.success().add("key", hashMap);
+    }
 }

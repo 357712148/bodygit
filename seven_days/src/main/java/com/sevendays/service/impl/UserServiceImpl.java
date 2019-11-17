@@ -7,6 +7,7 @@ import com.sevendays.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,9 +28,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserTable> findinfo(UserTable userInfo) {
-        UserTableExample example = new UserTableExample();
-        UserTableExample.Criteria criteria = example.createCriteria();
-        criteria.andUserNameLike(userInfo.getUserName());
-        return userTableMapper.selectByExample(example);
+        if (userInfo.getUserName() != null) {
+            UserTableExample example = null;
+            try {
+                example = new UserTableExample();
+                UserTableExample.Criteria criteria = example.createCriteria();
+                criteria.andUserNameLike(userInfo.getUserName());
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+            return userTableMapper.selectByExample(example);
+        }
+        return userTableMapper.selectByExample(null);
     }
+
 }
