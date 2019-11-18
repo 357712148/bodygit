@@ -59,11 +59,9 @@ public class JmerterScriptServiceImpl implements JmerterScriptService {
         execCmd.replacTextContent(old, "#numThread", num);
         //替换执行时间
         execCmd.replacTextContent(old, "#timeDuration", seconds);
-        String runcmd = "nohup jmeter -n -t /home/7d/#scriptName.jmx -l /home/7d/#scriptName.jtl -j /home/7d/jmeter.log>/home/7d/jmeterlog.log & ".replaceAll("#scriptName", script);
+        String runcmd = "nohup jmeter -n -t /home/7d/#scriptName.jmx -l /home/7d/#scriptName.jtl -j /home/7d/jmeter.log > /home/7d/jmeterlog.log&".replaceAll("#scriptName", script);
         logger.info("运行命令{}", runcmd);
         execCmd.execCmd(runcmd);
-//        String tail = "tail -f /home/7d/jmeterlog.log";
-//        execCmd.execCmd(tail);
     }
 
     @Override
