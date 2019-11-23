@@ -18,11 +18,14 @@ import java.util.concurrent.TimeUnit;
  * @Description: 用例区域
  * @date 2019/11/21 / 10:06
  */
-public class LoginTest {
+public class BestRuner {
 
 
     static AndroidDriver<AndroidElement> driver;
 
+    public static AndroidDriver<AndroidElement> getDriver() {
+        return driver;
+    }
     /**
      * 初始化运行类
      *
@@ -37,7 +40,7 @@ public class LoginTest {
         LogUtil.info("---这是设备ID号-->" + udid);
         LogUtil.info("--这是运行端口--->" + port);
         //通过路径获取包名与APP_ACTIVITY
-        String apk = "C:\\Users\\liwen\\Downloads\\pinduoduov4.76.0_downcc.com.apk";
+        String apk = "pinduoduov4.76.0_downcc.com.apk";
         driver = DriverBase.initDriver(port, udid, apk, true);
         driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
     }
