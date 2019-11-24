@@ -40,16 +40,15 @@ public class BestRuner {
         LogUtil.info("---这是设备ID号-->" + udid);
         LogUtil.info("--这是运行端口--->" + port);
         //通过路径获取包名与APP_ACTIVITY
-        String apk = "pinduoduov4.76.0_downcc.com.apk";
+        String apk = "com.jingdong.app.mall_70502.apk";
         driver = DriverBase.initDriver(port, udid, apk, true);
         driver.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
     }
 
-    @Test
+    @Test(description = "初始化登录启动", testName = "进入首页", priority = 0)
     public void T001() {
         LogUtil.info("启动");
-        driver.findElement(By.id("com.xunmeng.pinduoduo:id/bo0")).click();
-
+        driver.findElement(By.id("com.jingdong.app.mall:id/mj")).click();
     }
 
 }

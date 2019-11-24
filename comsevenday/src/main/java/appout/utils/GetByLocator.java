@@ -29,7 +29,7 @@ public class GetByLocator {
     public GetByLocator(String filename) {
         properties = new Properties();
         try {
-            FileInputStream in = new FileInputStream((sysProperty.getProperty("user.dir") + "/src/main/resources/uiElement/" + filename));
+            FileInputStream in = new FileInputStream((sysProperty.getProperty("user.dir") + "/comsevenday/src/main/resources/uiElement/" + filename));
             this.properties.load(in);
             in.close();
         } catch (Exception e) {
