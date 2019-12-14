@@ -36,6 +36,17 @@ public class createTestngXml {
         Element listener1 = listeners.addElement("listener");
         listener1.addAttribute("class-name", "appout.reporter.ReporterListener");
         Element test = root.addElement("test");
+
+        //增加设备号与端口号：
+        Element paramUuid = test.addElement("parameter");
+        paramUuid.addAttribute("name", "udid");
+        //根据实际情况修改
+        paramUuid.addAttribute("value", "127.0.0.1:62001");
+        Element paramPort = test.addElement("parameter");
+        paramPort.addAttribute("name", "port");
+        //根据实际情况修改
+        paramPort.addAttribute("value", "4723");
+
         test.addAttribute("name", "127.0.0.1");
         Element classes = test.addElement("classes");
         Element classNode = classes.addElement("class");

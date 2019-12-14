@@ -1,5 +1,6 @@
 package appout;
 
+import appout.utils.OperationalCmd;
 import appout.utils.createTestngXml;
 import org.testng.TestNG;
 import java.util.ArrayList;
@@ -18,6 +19,12 @@ public class MainTest {
     private static final String ESCAPE_PROPERTY = "org.uncommons.reportng.escape-output";
 
     public static void main(String[] args) {
+
+        //先执行kill
+        OperationalCmd.killServer();
+        //在启动服务
+        OperationalCmd.startAppium();
+
         try {
             //执行的类
             createTestngXml.createTestngXml("appout.appcase.CartTest");

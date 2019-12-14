@@ -1,6 +1,7 @@
 package appout.utils;
 
 import appout.base.AndroidCapabilityType;
+import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class OperationalCmd {
 
     public OperationalCmd() {
     }
+
     /**
      * 项目所在的系统的类型（大写）
      */
@@ -32,6 +34,7 @@ public class OperationalCmd {
      * 获取设备序列号
      */
     public static final String GET_DEVICE_NAME = "adb get-serialno";
+
     /**
      * 获取包名与 APP_ACTIVITY
      *
@@ -96,12 +99,77 @@ public class OperationalCmd {
         return null;
     }
 
+
     /**
+     * 启动appium服务
+     */
+    public static void startAppium() {
+        String deviceName = getDeviceName();
+        String cmmd = "appium -p 4327 -bp  11 -U " + deviceName + ">" + deviceName + "_log.log";
+        execCmd(cmmd);
+    }
+
+    /**
+     * 获取设备号
+     *
      * @return name of the device
      * @throws IOException
      */
     public static String getDeviceName() {
         return runCmdCommand(GET_DEVICE_NAME).trim();
+    }
+
+
+    /**
+     * 启动或者关闭appium servers
+     * kill server with appium servers
+     *
+     * @return
+     */
+    public static boolean killServer() {
+        String command = null;
+        if (osName.toLowerCase().contains("mac")) {
+            command = "killall node";
+        } else if (osName.toLowerCase().contains("win")) {
+            command = "taskkill -F -PID node.exe";
+        } else {
+            command = "taskkill -F -PID node.exe";
+        }
+        if (execCmd(command)) {
+            LogUtil.debug("kill server node  Succeed");
+            return true;
+        } else {
+            LogUtil.error("kill server node Failure");
+            return false;
+        }
+    }
+
+
+    /**
+     * 执行操作命令
+     *
+     * @param cmdString
+     * @return
+     */
+    public static boolean execCmd(String cmdString) {
+        if (cmdString == null) {
+            return false;
+        }
+        //获取当前执行环境
+        Runtime p = Runtime.getRuntime();
+        Process process = null;
+        try {
+            if (osName.toLowerCase().contains("mac")) {
+                String[] command = {"/bin/sh", "-c", cmdString};
+                process = p.exec(command);
+            } else if (osName.toLowerCase().contains("win")) {
+                process = p.exec("cmd /c " + cmdString);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -133,6 +201,7 @@ public class OperationalCmd {
         }
         return content.toString();
     }
+
     /**
      * 执行命令
      *
@@ -157,6 +226,7 @@ public class OperationalCmd {
 
         return sb.toString();
     }
+
     /**
      * 获取手机版本
      *
@@ -188,11 +258,18 @@ public class OperationalCmd {
         String versionRelease = "adb shell getprop ro.build.version.release";
         List<String> devList = null;
         try {
-            devList = OperationalCmd.execute(versionName,true);
+            devList = OperationalCmd.execute(versionName, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
         String s = devList.get(0).split("=")[1] + "/Android:" + OperationalCmd.execReturnAndWait(versionRelease);
         return s;
+    }
+
+    @Test
+    public void getde() {
+        startAppium();
+//        LogUtil.info(deviceName);
+
     }
 }

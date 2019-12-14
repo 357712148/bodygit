@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
-    <title>泰国站UI自动</title>
+    <title>UI自动</title>
     <style>
         body {
             background-color: #f2f2f2;
@@ -175,7 +175,7 @@
 
 <body>
 <br>
-<h1 align="center">泰国站UI自动化回归报告</h1>
+<h1 align="center">UI自动化回归报告</h1>
 
 <h2>汇总信息</h2>
 <table id="summary">
